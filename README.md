@@ -6,7 +6,7 @@ Project Description: Basic Implementation of the PagSeguro API with NEXT.js
 
 This project aims to implement the PagSeguro API in a basic way, taking advantage of the NEXT.js framework and the Axios library to make API calls. Additionally, GSAP will be used to create dynamic and attractive animations.
 
-To test the payment, simply use the test cards provided in the documentation: [`Cartões de teste Pagseguro`](https://dev.pagbank.uol.com.br/docs/cartoes-de-teste)
+To test the payment, simply use the test cards provided in the documentation: [`Pagseguro test cards`](https://dev.pagbank.uol.com.br/docs/cartoes-de-teste)
 
 ## Getting Started
 
