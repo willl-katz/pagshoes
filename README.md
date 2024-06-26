@@ -1,5 +1,13 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+# Objective with the project
+
+Project Description: Basic Implementation of the PagSeguro API with NEXT.js
+
+This project aims to implement the PagSeguro API in a basic way, taking advantage of the NEXT.js framework and the Axios library to make API calls. Additionally, GSAP will be used to create dynamic and attractive animations.
+
+To test the payment, simply use the test cards provided in the documentation: [`Cartões de teste Pagseguro`](https://dev.pagbank.uol.com.br/docs/cartoes-de-teste)
+
 ## Getting Started
 
 First, install all project dependencies:

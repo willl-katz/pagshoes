@@ -37,7 +37,7 @@ const objectsProducts = [
     price: 120000,
     urlImageShoe: shoeAir,
     textColor: "text-[#9CA5A5] h-80",
-    bgColor: "bg-green-700"
+    bgColor: "bg-green-700 pt-7"
   },
 ]
 

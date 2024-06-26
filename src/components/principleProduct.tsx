@@ -20,7 +20,7 @@ type PrincipleProductProps = {
 
 export function PrincipleProduct({ selectShoe, title, bgColor, textColor, id, price }:PrincipleProductProps) {
     // Definindo o estilo padrão das tags.
-    const defaultStyleContainer = "h-screen flex-1 flex flex-col items-center justify-center relative overflow-hidden ";
+    const defaultStyleContainer = "h-screen flex-1 flex flex-col items-center justify-right lg:justify-center relative overflow-hidden ";
     const defaultStyleText = "-rotate-90 text-gray-700 text-[195.07px] font-extrabold absolute bottom-28 -right-[104px] w-fit h-56 select-none text-left text-left"
     const defaultStyleRepeatText = "-rotate-[35deg] text-gray-700 text-[120px] font-extrabold absolute top-[100vh] -right-28 w-max h-auto select-none text-left z-10 tracking-wider word-spacing opacity-0 flex justify-center items-center"
 
@@ -37,6 +37,7 @@ export function PrincipleProduct({ selectShoe, title, bgColor, textColor, id, pr
     const refRepeatText2 = useRef(null);
     const refContainerPurchaseShoe = useRef(null);
     const refIconHeart = useRef(null);
+    const refButtonCloseMobile = useRef(null);
 
     // States
     const [activeBuy, setActiveBuy] = useState<boolean>(false)
@@ -51,8 +52,8 @@ export function PrincipleProduct({ selectShoe, title, bgColor, textColor, id, pr
                 title
             });
             if (!link) throw new Error("Checkout não foi criado")
-            //window.location.href = link;
-            window.open(link, '_blank');
+            window.location.href = link; // Opens in the same window
+            //window.open(link, '_blank'); // Open a new window window
         } catch (err:any) {
             console.log(err.message);
         }
@@ -69,8 +70,10 @@ export function PrincipleProduct({ selectShoe, title, bgColor, textColor, id, pr
                     boxShadow: "13px 15px 15px 15px rgba(0, 0, 0, 0)"
                 })
                 gsap.to(refImageProduct.current, {
-                    marginRight: 0,
-                    scale: 1
+                    x: 0,
+                    scale: 1,
+                    duration: 1,
+                    ease: "sine.out",
                 })
                 gsap.to(refTitle.current, {
                     opacity: 1
@@ -88,31 +91,182 @@ export function PrincipleProduct({ selectShoe, title, bgColor, textColor, id, pr
             }}
             onMouseEnter={() => {
                 if (!activeBuy) {
-                    gsap.to(refContainerProduct.current, {
-                        flexBasis: 25,
-                        zIndex: 100,
-                        boxShadow: "0px 0px 20px 0px rgba(0, 0, 0, 0.5)"
+                    let mm = gsap.matchMedia();
+                    mm.add({
+                        isDesktop: "(min-width: 769px)",
+                        isTablet: "(min-width: 426px)",
+                        isMobile: "(max-width: 425px)",
+                    }, (context) => {
+                        let { isDesktop, isMobile, isTablet }:any = context.conditions;
+                        if(isDesktop) {
+                            gsap.to(refContainerProduct.current, {
+                                flexBasis: 25,
+                                zIndex: 100,
+                                boxShadow: "0px 0px 20px 0px rgba(0, 0, 0, 0.5)"
+                            })
+                            gsap.to(refImageProduct.current, {
+                                x: "50px",
+                                scale: 1.3,
+                                duration: 1,
+                                ease: "sine.out",
+                            })
+                            gsap.to(refTitle.current, {
+                                opacity: 0
+                            })
+                            gsap.to(refRepeatText.current, {
+                                opacity: 0.7
+                            })
+                            const timeline = gsap.timeline({ repeat: -1, repeatDelay: 0, yoyo: true });
+                            timeline.fromTo(refRepeatText2.current, { x: 300, duration: 5, ease: 'none'}, { x: '+=40%', duration: 5, ease: 'none'});
+                            gsap.to(refContainerPurchaseShoe.current, {
+                                opacity: 1
+                            })
+                        } else if (isTablet) {
+                            gsap.to(refContainerProduct.current, {
+                                flexBasis: 25,
+                                zIndex: 100,
+                                boxShadow: "0px 0px 20px 0px rgba(0, 0, 0, 0.5)"
+                            })
+                            gsap.to(refImageProduct.current, {
+                                x: "0px",
+                                scale: 1.3,
+                                duration: 1,
+                                ease: "sine.out",
+                            })
+                            gsap.to(refTitle.current, {
+                                opacity: 0
+                            })
+                            gsap.to(refRepeatText.current, {
+                                opacity: 0.7
+                            })
+                            const timeline = gsap.timeline({ repeat: -1, repeatDelay: 0, yoyo: true });
+                            timeline.fromTo(refRepeatText2.current, { x: 300, duration: 5, ease: 'none'}, { x: '+=40%', duration: 5, ease: 'none'});
+                            gsap.to(refContainerPurchaseShoe.current, {
+                                opacity: 1
+                            })
+                        } else if (isMobile) {
+                            gsap.to(refContainerProduct.current, {
+                                flexBasis: 100,
+                                zIndex: 100,
+                                boxShadow: "0px 0px 20px 0px rgba(0, 0, 0, 0.5)"
+                            })
+                            gsap.to(refImageProduct.current, {
+                                x: "0px",
+                                scale: 1.3,
+                                duration: 1,
+                                ease: "sine.out",
+                            })
+                            gsap.to(refTitle.current, {
+                                opacity: 0
+                            })
+                            gsap.to(refRepeatText.current, {
+                                opacity: 0.7
+                            })
+                            const timeline = gsap.timeline({ repeat: -1, repeatDelay: 0, yoyo: true });
+                            timeline.fromTo(refRepeatText2.current, { x: 300, duration: 5, ease: 'none'}, { x: '+=40%', duration: 5, ease: 'none'});
+                            gsap.to(refContainerPurchaseShoe.current, {
+                                opacity: 1
+                            });
+                            gsap.fromTo(refButtonCloseMobile.current, {
+                                opacity: 0,
+                            }, {
+                                opacity: 1,
+                            })
+                        }
                     })
-                    gsap.to(refImageProduct.current, {
-                        marginRight: "250px",
-                        scale: 1.3
-                    })
-                    gsap.to(refTitle.current, {
-                        opacity: 0
-                    })
-                    gsap.to(refRepeatText.current, {
-                        opacity: 0.7
-                    })
-                    const timeline = gsap.timeline({ repeat: -1, repeatDelay: 0, yoyo: true });
-                    timeline.fromTo(refRepeatText2.current, { x: 300, duration: 5, ease: 'none'}, { x: '+=40%', duration: 5, ease: 'none'});
-                    gsap.to(refContainerPurchaseShoe.current, {
-                        opacity: 1
+                    setActiveBuy(true);
+                }
+            }}
+            onClick={() => {
+                if (!activeBuy) {
+                    let mm = gsap.matchMedia();
+                    mm.add({
+                        isDesktop: "(min-width: 769px)",
+                        isTablet: "(min-width: 426px)",
+                        isMobile: "(max-width: 425px)",
+                    }, (context) => {
+                        let { isDesktop, isMobile, isTablet }:any = context.conditions;
+                        if(isDesktop) {
+                            gsap.to(refContainerProduct.current, {
+                                flexBasis: 25,
+                                zIndex: 100,
+                                boxShadow: "0px 0px 20px 0px rgba(0, 0, 0, 0.5)"
+                            })
+                            gsap.to(refImageProduct.current, {
+                                x: "50px",
+                                scale: 1.3,
+                                duration: 1,
+                                ease: "sine.out",
+                            })
+                            gsap.to(refTitle.current, {
+                                opacity: 0
+                            })
+                            gsap.to(refRepeatText.current, {
+                                opacity: 0.7
+                            })
+                            const timeline = gsap.timeline({ repeat: -1, repeatDelay: 0, yoyo: true });
+                            timeline.fromTo(refRepeatText2.current, { x: 300, duration: 5, ease: 'none'}, { x: '+=40%', duration: 5, ease: 'none'});
+                            gsap.to(refContainerPurchaseShoe.current, {
+                                opacity: 1
+                            })
+                        } else if (isTablet) {
+                            gsap.to(refContainerProduct.current, {
+                                flexBasis: 25,
+                                zIndex: 100,
+                                boxShadow: "0px 0px 20px 0px rgba(0, 0, 0, 0.5)"
+                            })
+                            gsap.to(refImageProduct.current, {
+                                marginRight: "0px",
+                                scale: 1.3,
+                                duration: 1,
+                                ease: "sine.out",
+                            })
+                            gsap.to(refTitle.current, {
+                                opacity: 0
+                            })
+                            gsap.to(refRepeatText.current, {
+                                opacity: 0.7
+                            })
+                            const timeline = gsap.timeline({ repeat: -1, repeatDelay: 0, yoyo: true });
+                            timeline.fromTo(refRepeatText2.current, { x: 300, duration: 5, ease: 'none'}, { x: '+=40%', duration: 5, ease: 'none'});
+                            gsap.to(refContainerPurchaseShoe.current, {
+                                opacity: 1
+                            })
+                        } else if (isMobile) {
+                            gsap.to(refContainerProduct.current, {
+                                flexBasis: 100,
+                                zIndex: 100,
+                                boxShadow: "0px 0px 20px 0px rgba(0, 0, 0, 0.5)"
+                            })
+                            gsap.to(refImageProduct.current, {
+                                marginRight: "0px",
+                                scale: 1.3,
+                                duration: 1,
+                                ease: "sine.out",
+                            })
+                            gsap.to(refTitle.current, {
+                                opacity: 0
+                            })
+                            gsap.to(refRepeatText.current, {
+                                opacity: 0.7
+                            })
+                            const timeline = gsap.timeline({ repeat: -1, repeatDelay: 0, yoyo: true });
+                            timeline.fromTo(refRepeatText2.current, { x: 300, duration: 5, ease: 'none'}, { x: '+=40%', duration: 5, ease: 'none'});
+                            gsap.to(refContainerPurchaseShoe.current, {
+                                opacity: 1
+                            });
+                            gsap.fromTo(refButtonCloseMobile.current, {
+                                opacity: 0,
+                            }, {
+                                opacity: 1,
+                            })
+                        }
                     })
                     setActiveBuy(true);
                 }
             }}
         >
-            <div className="z-50">
+            <div className="z-50 w-[600px] lg:w-full md:ml-36 lg:ml-0 ml-48">
                 <Image
                     alt="Produto a venda"
                     src={selectShoe}
@@ -147,13 +301,46 @@ export function PrincipleProduct({ selectShoe, title, bgColor, textColor, id, pr
                         console.log(button.currentTarget.children[0].children[0].setAttribute("stroke", "#FC0707"));
                     }}>
                         <svg width="14" height="13" viewBox="0 0 14 13" fill="none" xmlns="http://www.w3.org/2000/svg" ref={refIconHeart} className="transition">
-                            <path d="M7.23625 3.53148C5.85042 0.278622 1 0.62508 1 4.7826C1 8.94012 7.23625 12.4048 7.23625 12.4048C7.23625 12.4048 13.4725 8.94012 13.4725 4.7826C13.4725 0.62508 8.62208 0.278622 7.23625 3.53148Z" stroke="black" stroke-linecap="round" stroke-linejoin="round" className="transition"/>
+                            <path d="M7.23625 3.53148C5.85042 0.278622 1 0.62508 1 4.7826C1 8.94012 7.23625 12.4048 7.23625 12.4048C7.23625 12.4048 13.4725 8.94012 13.4725 4.7826C13.4725 0.62508 8.62208 0.278622 7.23625 3.53148Z" stroke="black" strokeLinecap="round" strokeLinejoin="round" className="transition"/>
                         </svg>
                         Add to Cart
                     </button>
                 </div>
                 <h2 className="text-gray-700 text-9xl font-extrabold select-none text-right">{title}</h2>
             </div>
+            <button className="bg-white absolute flex opacity-0 sm:cursor-no-click items-center justify-center px-2 py-1 right-6 top-4 font-black rounded-md z-50" ref={refButtonCloseMobile} onMouseEnter={() => {
+                if(activeBuy) {
+                    gsap.to(refContainerProduct.current, {
+                        flexBasis: 1,
+                        zIndex: 0,
+                        boxShadow: "13px 15px 15px 15px rgba(0, 0, 0, 0)"
+                    })
+                    gsap.to(refImageProduct.current, {
+                        x: 0,
+                        scale: 1,
+                        duration: 1,
+                        ease: "sine.out",
+                    })
+                    gsap.to(refTitle.current, {
+                        opacity: 1
+                    })
+                    gsap.to(refRepeatText.current, {
+                        opacity: 0
+                    })
+                    gsap.fromTo(refRepeatText2.current, { x: 300, duration: 0, ease: 'none'}, { x: '0', duration: 0, ease: 'none'});
+                    // const timeline = gsap.timeline({ repeat: 0, repeatDelay: 0});
+                    // timeline.to(refRepeatText2.current, { x: '0', duration: 0, ease: 'none'});
+                    gsap.to(refContainerPurchaseShoe.current, {
+                        opacity: 0
+                    })
+                    gsap.fromTo(refButtonCloseMobile.current, {
+                        opacity: 0,
+                    }, {
+                        opacity: 0,
+                    })
+                    setActiveBuy(false);
+                }
+            }}>X</button>
         </div>
     )
 }

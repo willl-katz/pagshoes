@@ -28,11 +28,11 @@ export async function createCheckout({id, price, title}:{id:number,price:number,
                     quantity: 1,
                     unit_amount: price,
                     image_url: "https://m.media-amazon.com/images/I/416oAQ6gQNL._AC_SY300_.jpg",
-                    description: 'Tênis esportivo do caralho'
+                    description: 'Tênis esportivo'
                 }
                 ],
                 reference_id: idRadom,
-                redirect_url: 'https://pagseguro.uol.com.br'
+                redirect_url: 'https://store-shoes-ten.vercel.app/'
             }
         };
 
@@ -45,7 +45,6 @@ export async function createCheckout({id, price, title}:{id:number,price:number,
         .catch(function (error) {
             throw error;
         });
-        console.log(link);
         return link;
     } catch (err) {
         console.error(err);
