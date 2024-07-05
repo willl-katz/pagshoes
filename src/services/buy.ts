@@ -27,12 +27,12 @@ export async function createCheckout({id, price, title}:{id:number,price:number,
                     name: `Tênis Esportivo - ${title}`,
                     quantity: 1,
                     unit_amount: price,
-                    image_url: "https://m.media-amazon.com/images/I/416oAQ6gQNL._AC_SY300_.jpg",
+                    image_url: "",
                     description: 'Tênis esportivo'
                 }
                 ],
                 reference_id: idRadom,
-                redirect_url: 'https://store-shoes-ten.vercel.app/'
+                redirect_url: ''
             }
         };
 
